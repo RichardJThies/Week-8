@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello Vue</title>
+        <script src="https://unpkg.com/vue@next"></script>
+    </head>
+    <body><!--Vue is still JS. All JS concepts still apply-->
+        <div id="app"> 
+            <h1>Hello Vue Forms</h1>
+
+            <label for="name">
+                Please enter your name: 
+            </label>
+            
+            <input v-model="name" id="name"> <!--Vue directive to connect to Vue data. v-model allows for 2 way data binding-->
+            <br>
+            <div v-if="name"> <!--v-if directive (conditional rendering) acts as a pseudo-boolan value. If no input, the string is not rendered-->
+                Your name is {{name}}.
+                <button v-on:click="clear">
+                    Clear Input
+                </button>
+            </div>
+
+            <label v-else> 
+                Waiting for user input.
+            </label> <!--v-else directive MUST be after v-if. It can't be used anywhere else-->
+        </div>
+
+        <script> 
+            let app = Vue.createApp({
+                data() {
+                    return {
+                        name: '' // empty string
+                    }
+                },
+                methods: {
+                    clear() { // clears the input. Because the button uses v-on directive the button will be hidden until further input
+                        this.name = '' // empty strings are considered falsey by JSB
+                    }
+                }
+            })
+
+            app.mount('#app') //connects app to the view/template
+        </script>
+    </body>
+
+</html>

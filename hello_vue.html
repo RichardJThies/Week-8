@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello Vue</title>
+        <script src="https://unpkg.com/vue@next"></script>
+    </head>
+    <body><!--Vue is still JS. All JS concepts still apply-->
+        <div id="app"> <!--All Vue code will go into this div element. All parts of the page that will be managed by Vue will be here-->
+            <h1>Hello Vue</h1> <!--the div is also the 'view', what the users will see on the webpage-->
+            
+            <label>
+                Original Message: {{message}}<!--Vue will interpret the div element as a template/view, written in mustache syntax-->
+            </label>
+            <br>
+            <label>
+                Computed Message: {{messageWithExclamationPoints}}
+            </label>
+            <br>
+            <button v-on:click="addExclamation">Add !</button><!--Vue directive-->
+            
+            <button v-on:click="clearButton">Clear Exclamation Points</button>
+        </div>
+
+        <script> //script describes how to create Vue app,
+        // This script is a Vue instance/model, which describes the data stored within
+            let app = Vue.createApp({// method call, explains structure of the app, what data it stores and what can it do. JS object in curly bracers
+                data() { //Vue apps tend to manage data, store in data function
+                    return {
+                        message: 'hello', // JS object, message property is being 'bound' to view above
+                        maxExclamationPoints: 10,
+                        exclamationPoints: 0
+                    }
+                },
+                methods: {
+                    addExclamation() { // must use 'this.' when refering to other data properties in the instance
+                        if(this.exclamationPoints < this.maxExclamationPoints) {
+                            this.exclamationPoints++
+                            //this.message = this.message + '!' // modifies message data property. NO LONGER NEEDED NOW WITH COMPUTED PROPERTY
+                        } else {
+                           alert('Only 10 "!" allowed.')
+                        }
+                    },
+                    clearButton() { // methods has same names as associated directives
+                       // this.message = 'hello' //resets both properties back to original. NO LONGER NEEDED WITH COMPUTED PROPERTY
+                        this.exclamationPoints = 0
+                    }
+                },
+                computed: { //computed property
+                    messageWithExclamationPoints() {
+                        let messageWithPoints = this.message
+                        for(let x = 0; x < this.exclamationPoints; x++) {
+                            messageWithPoints = messageWithPoints + '!'
+                        }
+                        return messageWithPoints
+                    }
+                }
+            })
+
+            app.mount('#app') //mount links the app to the webpage (div id="app"), css selector
+        </script>
+    </body>
+
+</html>

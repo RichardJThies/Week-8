@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shopping Cart</title>
+        <script src="https://unpkg.com/vue@next"></script>
+        <style>
+            td, th {
+                width: 25%;
+                text-align: center;
+            }
+
+            .error-message {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app"> 
+            <h1>Example Shopping Cart</h1>
+           <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+
+                <tr>
+                  <td>{{name}}</td>  
+                  <td>{{unitPrice}}</td>  
+                  <td>
+                    <input id="quantity" type="number" v-model="quantity"> <!-- The number modifier will convert the text entered to a number, if a conversion is possible -->
+                    
+                    <div class="error-message" v-if="quantityError">
+                        {{quantityError}}
+                    </div>
+                  </td> 
+                  <td>
+                    <div v-if="quantityError">
+                        Invalid quantity
+                    </div>
+                    
+                    <div v-else>
+                    ${{total}}
+                    </div>
+                    </td>   
+                </tr>
+           </table>
+        </div>
+
+        <script> 
+        let app = Vue.createApp( {
+            data() {
+                return {
+                    name: 'Hat',
+                    quantity: 1,
+                    unitPrice: 11.99,
+                    maxQuantity: 20,
+                    quantityError: ''
+                }
+            },
+            computed: {
+                total() {
+                    let totalPrice = this.quantity * this.unitPrice // must use "this."" if you are refering to data in the wider instance 
+                    let = roundedPrice = totalPrice.toFixed(2)
+                    return roundedPrice //variables created within computed property are not referenced with "this."
+                }
+            },
+            watch: {
+                quantity(newQuantity, oldQuantity) {
+                    //sends an error message if new value of quantity is invalid
+                    if(!Number.isInteger(newQuantity)) {
+                        this.quantityError = 'Quantity must be a positive number'
+                    } else if
+                    (newQuantity < 0 || newQuantity > this.maxQuantity) {// "||" is OR boolean
+                        this.quantityError = 'Quantity must be between 0 and 20'
+                    } else {
+                        this.quantityError = ''//clears error if quantity is valid
+                    }
+
+                }
+            }
+           })
+
+           app.mount('#app')
+        </script>
+    </body>
+
+</html>
