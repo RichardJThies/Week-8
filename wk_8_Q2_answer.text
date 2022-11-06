@@ -1,6 +1,9 @@
 Question 2 answer:
-The warning means that there something called “total” that is supposed to be managed by Vue in the template/view, but it isn’t defined in the instance/model data. 
-Therefore, it cannot be rendered by Vue even though it is being called by the website.
+The warning means that there something called “total” that is supposed to be 
+managed by Vue in the template/view, but it isn’t defined in the instance/model 
+data. Therefore, it cannot be rendered by Vue even though it is being called 
+by the website. In order to fix the warning, a computed property must be 
+created down in the app to calculate the total.
 
 
 
